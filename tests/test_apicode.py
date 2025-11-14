@@ -3,7 +3,7 @@
 import requests
 import json
 import ast
-from main import use_model
+from api.main import use_model
 
 def test_model_output():
     """
