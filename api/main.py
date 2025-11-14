@@ -12,11 +12,11 @@ def use_model(data: Request):
     # Charger le modèle depuis MLflow
     proba_list = model.predict_proba(df)
     preds_list = model.predict(df)
-    accepted_loan = f"Le prêt peut être accordé (probabilité de non remboursement inférieure au seuil {model.best_threshold})"
-    rejected_loan = f"Le prêt ne peut pas être accordé (probabilité de non remboursement supérieure au seuil {model.best_threshold})"
+    accepted_loan = f"Le prêt peut être accordé (probabilité de non remboursement inférieure au seuil {model.best_threshold_})"
+    rejected_loan = f"Le prêt ne peut pas être accordé (probabilité de non remboursement supérieure au seuil {model.best_threshold_})"
     verdict = [accepted_loan if pred == 0 else rejected_loan for pred in preds_list]
     # print(preds)
-    return {"Verdict": str(verdict), "Probabilité de non remboursement": str(proba_list), "Seuil utilisé" : str(model.best_threshold)}
+    return {"Verdict": str(verdict), "Probabilité de non remboursement": str(proba_list), "Seuil utilisé" : str(model.best_threshold_)}
 
 @app.get("/")
 def home():
