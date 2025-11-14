@@ -7,17 +7,23 @@ model = joblib.load("model.pkl")
 
 app = FastAPI(title="Home Credit API")
 
+def use_model(data: Request):
+    df = pd.DataFrame(data)
+    # Charger le modèle depuis MLflow
+    proba_list = model.predict_proba(df)
+    preds_list = model.predict(df)
+    accepted_loan = f"Le prêt peut être accordé (probabilité de non remboursement inférieure au seuil {model.best_threshold})"
+    rejected_loan = f"Le prêt ne peut pas être accordé (probabilité de non remboursement supérieure au seuil {model.best_threshold})"
+    verdict = [accepted_loan if pred == 0 else rejected_loan for pred in preds_list]
+    # print(preds)
+    return {"Verdict": str(verdict), "Probabilité de non remboursement": str(proba_list), "Seuil utilisé" : str(model.best_threshold)}
+
 @app.get("/")
 def home():
     return {"message": "Bienvenue sur l'API Home Credit !"}
 
 @app.post("/predict")
-async def predict(request: Request):
+async def model_predict(request: Request):
     data = await request.json()
 
-    df = pd.DataFrame(data) 
-
-    # Charger le modèle depuis MLflow
-    preds = model.predict(df)
-    print(preds)
-    return {"Prédiction": str(preds)}
+    use_model(data = data)
