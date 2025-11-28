@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 import pandas as pd
 import joblib
 import pickle as pkl
+import os
 
 class ModelWithThreshold:
     """
@@ -20,7 +21,10 @@ class ModelWithThreshold:
 
 
 # Charger le modèle au démarrage
-with open("model_lightGBM.pkl", 'rb') as file:
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model_lightGBM.pkl")
+
+with open(MODEL_PATH, 'rb') as file:
     model = pkl.load(file)
 
 app = FastAPI(title="Home Credit API")
