@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 import pandas as pd
 import joblib
+import pickle as pkl
 
 class ModelWithThreshold:
     """
@@ -19,7 +20,7 @@ class ModelWithThreshold:
 
 
 # Charger le modèle au démarrage
-model = joblib.load("model_lightGBM.pkl")
+model = pkl.load("model_lightGBM.pkl")
 
 app = FastAPI(title="Home Credit API")
 
