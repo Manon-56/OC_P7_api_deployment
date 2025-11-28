@@ -20,9 +20,9 @@ def test_model_output():
     response = use_model(requete)
 
     proba_list = ast.literal_eval(response.get('Probabilité de non remboursement'))
-    assert all(((proba <1) and (proba >1)) for proba in  proba_list)
+    assert all(((proba <1) and (proba >0)) for proba in  proba_list)
     seuil = ast.literal_eval(response.get('Seuil utilisé'))
-    assert (seuil>1) and (seuil<1)
+    assert (seuil>0) and (seuil<1)
     verdict_list = response.get("Verdict")
     for idx, verdict in enumerate(verdict_list):
         if verdict.startswith("Le prêt peut être accordé"):

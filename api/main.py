@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # Charger le modèle au démarrage
-model = joblib.load("model.pkl")
+model = joblib.load("model_lightGBM.pkl")
 
 app = FastAPI(title="Home Credit API")
 
