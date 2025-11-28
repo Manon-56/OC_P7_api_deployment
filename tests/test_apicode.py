@@ -19,7 +19,7 @@ def test_model_output():
     
     response = use_model(requete)
 
-    proba_list = ast.literal_eval(response.get('Probabilité de non remboursement'))
+    proba_list = ast.literal_eval(response.get('Probabilité de remboursement'))
     assert all(((proba <1) and (proba >0)) for proba in  proba_list)
     seuil = ast.literal_eval(response.get('Seuil utilisé'))
     assert (seuil>0) and (seuil<1)

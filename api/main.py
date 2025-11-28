@@ -18,13 +18,13 @@ app = FastAPI(title="Home Credit API")
 def use_model(data: Request):
     df = pd.DataFrame(data)
     # Charger le modèle depuis MLflow
-    proba_list = model.predict_proba(df)
+    proba_list = model.predict_proba(df)[:,0]
     preds_list = model.predict(df)
-    accepted_loan = f"Le prêt peut être accordé (probabilité de non remboursement inférieure au seuil {model.threshold})"
-    rejected_loan = f"Le prêt ne peut pas être accordé (probabilité de non remboursement supérieure au seuil {model.threshold})"
+    accepted_loan = f"Le prêt est accordé"
+    rejected_loan = f"Le prêt est refusé"
     verdict = [accepted_loan if pred == 0 else rejected_loan for pred in preds_list]
     # print(preds)
-    return {"Verdict": str(verdict), "Probabilité de non remboursement": str(proba_list), "Seuil utilisé" : str(model.threshold)}
+    return {"Verdict": str(verdict), "Probabilité de remboursement": str(proba_list), "Seuil utilisé" : str(model.threshold)}
 
 @app.get("/")
 def home():
