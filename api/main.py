@@ -1,9 +1,8 @@
 from fastapi import FastAPI, Request
 import pandas as pd
-import joblib
 import pickle as pkl
 import os
-from api.models.custom_models import ModelWithThreshold
+from api.custom_models import ModelWithThreshold
 
 
 # Charger le modèle au démarrage
