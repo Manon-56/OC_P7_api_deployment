@@ -20,7 +20,8 @@ class ModelWithThreshold:
 
 
 # Charger le modèle au démarrage
-model = pkl.load("model_lightGBM.pkl")
+with open("model_lightGBM.pkl", 'r') as file:
+    model = pkl.load(file)
 
 app = FastAPI(title="Home Credit API")
 
